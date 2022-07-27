@@ -7,3 +7,5 @@ git:
 
 #NOTE: "makefile:2: *** missing separator.  Stop."
 #HOW TO FIX: use tab instead of regular spaces
+
+#vsc attempt
