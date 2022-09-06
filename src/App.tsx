@@ -1,14 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PurchaseCalculator from './components/purchase_calculator';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <h2>Stock Calculator</h2>
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          <PurchaseCalculator />
         </p>
         <a
           className="App-link"
