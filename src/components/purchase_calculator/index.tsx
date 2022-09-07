@@ -74,16 +74,17 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
         //setup a const to fetch this.state
         const {shareQuantity, sharePrice, subTotal} = this.state
 
-        //TODO - stopped here at 16:14 video
+        //TODO - stopped here at 17:40 video
         return (<div className="purchaseContainer">
-            <label htmlFor="shareQuantity">Share Quantity</label>
-            <input name="shareQuantity" value={shareQuantity} onChange={this.handleOnChange}/>
+            <h1>Purchase Calculator</h1>
+            <label htmlFor="shareQuantity" className="rowData">Share Quantity</label>
+            <input name="shareQuantity" value={shareQuantity} onChange={this.handleOnChange} className="rowData"/>
 
-            <label htmlFor="sharePrice">Share Price</label>
-            <input name="sharePrice" value={sharePrice} onChange={this.handleOnChange}/>
+            <label htmlFor="sharePrice" className="rowData">Share Price</label>
+            <input name="sharePrice" value={sharePrice} onChange={this.handleOnChange} className="rowData"/>
             
-            <label htmlFor="subTotal">SubTotal</label>
-            <input name="subTotal" value={subTotal} onChange={this.handleOnChange}/>
+            <label htmlFor="subTotal" className="rowData">SubTotal</label>
+            <input name="subTotal" value={subTotal} onChange={this.handleOnChange} className="rowData"/>
         </div>)
     }
 }
