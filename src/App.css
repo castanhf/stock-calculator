@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+h3 {
+    margin: 8px;
+}
+
+.calculatorContainer {
+  background: #d0d0d0;
+  width: 400px;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 8px;
+  display: inline-block;
+}
+
+.rowData {
+  width: calc(50% - 16px);
+  margin: 4x;
+  display: inline-block;
+  text-align: left;
+  font-size: 16px;
+  color: #505050
+}

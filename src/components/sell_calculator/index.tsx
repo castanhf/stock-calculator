@@ -12,9 +12,9 @@ interface State {
 
 
 /* 
- *  Class responsible for holding the Stock Purchase Calculator
+ *  Class responsible for holding the Stock Sell Calculator
  */
-class PurchaseCalculator extends React.PureComponent<Props, State> {
+class SellCalculator extends React.PureComponent<Props, State> {
     
     /* 
      *  Overriding constructor
@@ -50,9 +50,9 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
             }
         } else if (name === 'subTotal') {
             state = {
-                shareQuantity,
-                sharePrice,
-                subTotal
+              shareQuantity: subTotal / sharePrice,
+              sharePrice,
+              subTotal
             }
         }
 
@@ -68,7 +68,7 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
         const {shareQuantity, sharePrice, subTotal} = this.state
 
         return (<div className="calculatorContainer">
-            <h1>Purchase Calculator</h1>
+            <h1>Sell Calculator</h1>
             <label htmlFor="shareQuantity" className="rowData">Share Quantity</label>
             <input name="shareQuantity" value={shareQuantity} onChange={this.handleOnChange} className="rowData"/>
 
@@ -81,4 +81,4 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
     }
 }
 
-export default PurchaseCalculator
+export default SellCalculator
