@@ -26,7 +26,13 @@ After that, run the following two commands:
 ```
 cd stock-calculator
 ```  
-`npm start` or `yarn start`  
+```
+npm start
+```  
+or  
+```
+yarn start
+```  
 Note: Need npm or yarn, respectively for either the commands to work  
 
 Your prefered browser will open a tab on `localhost:3000` running the contents on `src/App`.  
