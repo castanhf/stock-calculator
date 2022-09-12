@@ -10,7 +10,9 @@ Info in .gitignore was taken from this [Stackoverflow QA](https://stackoverflow.
 
 # Install create-react app
 create-react-app is useful for default React projects
-`npm install -g create-react-app`
+```
+npm install -g create-react-app
+```
 
 # Create our new project
 Used the following command to create the react project folder called stock-calculator:
