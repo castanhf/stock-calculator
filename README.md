@@ -34,7 +34,14 @@ or
 ```
 yarn start
 ```  
-Note: Need npm or yarn, respectively for either the commands to work  
+Note: Need npm or yarn installed, respectively for either the commands to work  
 
 Your prefered browser will open a tab on `localhost:3000` running the contents on `src/App`.  
-To stop this process just hit `Ctrl + c` in the terminal to kill the process.
+To stop this process just hit `Ctrl + c` in the terminal to kill the process.  
+
+# Adding state management
+The following information regards Redux, which is a state management library, was searched in this [Microsoft GitHub Archive](https://github.com/microsoft/TypeScript-React-Starter).  
+
+Once in the aforementioned Github archive repository, `Ctrl + f`, then search for "Installing Redux".  
+
+Redux comes into play with this app since the stock calculator is a bit more interactive, so we can update and synchronize the data in a seamless and smoother style to the user.  
