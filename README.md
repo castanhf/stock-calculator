@@ -22,10 +22,11 @@ create-react-app stock-calculator --template typescript
 
 Got info from this link: [create-react-app.dev](https://create-react-app.dev/docs/adding-typescript/)
 
-After that, run the following two commands:
+After that, run the next command
 ```
 cd stock-calculator
 ```  
+followed by one of the following:  
 ```
 npm start
 ```  
