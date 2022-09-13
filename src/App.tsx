@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import PurchaseCalculator from './components/purchase_calculator';
 import SellCalculator from './components/sell_calculator';
+import * as componentNames from './constants/component_names'
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
         <h2>Stock Calculator</h2>
       </header>
         <p className='App-intro'>
-          <PurchaseCalculator />
-          <SellCalculator />
+          <PurchaseCalculator id={componentNames.purchaseShares} />
+          <SellCalculator id={componentNames.sellShares} />
         </p>
     </div>
   );

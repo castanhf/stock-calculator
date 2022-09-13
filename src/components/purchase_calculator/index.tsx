@@ -1,7 +1,8 @@
 import React from "react";
+import {connect } from 'react-redux';
 
 interface Props {
-
+    id: string
 }
 
 interface State {
@@ -81,4 +82,14 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
     }
 }
 
-export default PurchaseCalculator
+function mapStateToProps() {
+    return null
+}
+
+function mapDispatchToProps() {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseCalculator)
