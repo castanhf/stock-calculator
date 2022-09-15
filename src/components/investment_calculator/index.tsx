@@ -45,9 +45,11 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
         const {currentStockPrice, userStockPriceAvg, nStocksToBuy, desiredUserStockPriceAvg} = Object.assign({}, this.state, {[name]: value})
 
         let state = this.state
+        
         //TODO: back to the white board on this one
         //don't forget to update if conditions and their respective
-        //bodies
+        //bodies. also continue watching the video to implement/fix the
+        //connect issue
         if (name === 'shareQuantity' || name === 'sharePrice') {
             state = {
                 currentStockPrice,
