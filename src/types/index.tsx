@@ -1,4 +1,7 @@
 export interface StoreState {
-    languageName: string;
-    enthusiasmLevel: number;
+    components: Map<string, Component>
+}
+
+export interface Component {
+    id: string,
 }

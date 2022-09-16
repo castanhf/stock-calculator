@@ -1,8 +1,13 @@
 import React from "react";
-import {connect } from 'react-redux';
+import { connect } from 'react-redux';
+import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
+import { updateField, updateFieldAction } from '../../actions/index';
+import { Component, StoreState } from "../../types";
 
 interface Props {
     id: string
+    component?: any    
+    updateField?: any
 }
 
 interface State {
@@ -82,14 +87,15 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
     }
 }
 
-function mapStateToProps() {
-    return null
-}
-
-function mapDispatchToProps() {
+function mapStateToProps(state: StoreState, props: Props) {
     return {
-
+        //TODO: following line is faulty but should be like because of video
+        //soon to be fixed
+      //component: state.components[props.id],
+      component: state.components,
+      id: props.id
     }
-}
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PurchaseCalculator)
+//this.props.updateField()
+export default connect(mapStateToProps, { updateField })(PurchaseCalculator as any)
