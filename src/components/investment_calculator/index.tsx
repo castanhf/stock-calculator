@@ -6,11 +6,17 @@ interface Props {
 }
 
 interface State {
-    currentStockPrice: number
-    userStockPriceAvg: number
-    nStocksToBuy: number
-    desiredUserStockPriceAvg: number
+    currStockQuantity: number           //a
+    currAvgCostPerStock: number         //b
+    numStocksToBuyOrSell: number        //c
+    currStockPrice: number              //d
+    desiredUserStockPriceAvg: number    //e
 }
+
+/* 
+ *The following is the equation using the variables in the State interface
+ *          e = (a * b) + (c * d) / (a + d)
+ */
 
 
 /* 
@@ -27,9 +33,10 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
 
         //setting the values
         this.state = {
-            currentStockPrice: 0,
-            userStockPriceAvg: 0,
-            nStocksToBuy: 0,
+            currStockQuantity: 0,
+            currAvgCostPerStock: 0,
+            numStocksToBuyOrSell: 0,
+            currStockPrice: 0,
             desiredUserStockPriceAvg: 0,
         }
     }
@@ -42,7 +49,7 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
         const {name, value}  = evnt.target
 
         //TODO: search for Object.assign()
-        const {currentStockPrice, userStockPriceAvg, nStocksToBuy, desiredUserStockPriceAvg} = Object.assign({}, this.state, {[name]: value})
+        const {currStockQuantity, currAvgCostPerStock, numStocksToBuyOrSell, currStockPrice, desiredUserStockPriceAvg} = Object.assign({}, this.state, {[name]: value})
 
         let state = this.state
         
@@ -52,16 +59,18 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
         //connect issue
         if (name === 'shareQuantity' || name === 'sharePrice') {
             state = {
-                currentStockPrice,
-                userStockPriceAvg,
-                nStocksToBuy,
+                currStockQuantity,
+                currAvgCostPerStock,
+                numStocksToBuyOrSell,
+                currStockPrice,
                 desiredUserStockPriceAvg
             }
         } else if (name === 'subTotal') {
             state = {
-                currentStockPrice,
-                userStockPriceAvg,
-                nStocksToBuy,
+                currStockQuantity,
+                currAvgCostPerStock,
+                numStocksToBuyOrSell,
+                currStockPrice,
                 desiredUserStockPriceAvg
             }
         }
@@ -75,21 +84,26 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
      */
     render() {
         //setup a const to fetch this.state
-        const {currentStockPrice, userStockPriceAvg, nStocksToBuy, desiredUserStockPriceAvg} = this.state
+        const {currStockQuantity, currAvgCostPerStock, numStocksToBuyOrSell, currStockPrice, desiredUserStockPriceAvg} = this.state
 
         return (<div className="calculatorContainer">
             <h1>Investment Calculator</h1>
-            <label htmlFor="currentStockPrice" className="rowData">Share Quantity</label>
-            <input name="currentStockPrice" value={currentStockPrice} onChange={this.handleOnChange} className="rowData"/>
+            <label htmlFor="currStockQuantity" className="rowData">Current Stock Quantity</label>
+            <input name="currStockQuantity" value={currStockQuantity} onChange={this.handleOnChange} className="rowData"/>
 
-            <label htmlFor="userStockPriceAvg" className="rowData">Share Price</label>
-            <input name="userStockPriceAvg" value={userStockPriceAvg} onChange={this.handleOnChange} className="rowData"/>
-            
-            <label htmlFor="nStocksToBuy" className="rowData">SubTotal</label>
-            <input name="nStocksToBuy" value={nStocksToBuy} onChange={this.handleOnChange} className="rowData"/>
+            <label htmlFor="currAvgCostPerStock" className="rowData">Current Cost Per Stock</label>
+            <input name="currAvgCostPerStock" value={currAvgCostPerStock} onChange={this.handleOnChange} className="rowData"/>
 
-            <label htmlFor="desiredUserStockPriceAvg" className="rowData">SubTotal</label>
+            <label htmlFor="currStockPrice" className="rowData">Current Stock Price</label>
+            <input name="currStockPrice" value={currStockPrice} onChange={this.handleOnChange} className="rowData"/>
+
+    {/**Divide between 'Current' and 'Desired' labels */}
+
+            <label htmlFor="desiredUserStockPriceAvg" className="rowData">Desired Cost Per Stock</label>
             <input name="desiredUserStockPriceAvg" value={desiredUserStockPriceAvg} onChange={this.handleOnChange} className="rowData"/>
+            
+            <label htmlFor="numStocksToBuyOrSell" className="rowData">Desired Amount of Stock to Purchase/Sell</label>
+            <input name="numStocksToBuyOrSell" value={numStocksToBuyOrSell} onChange={this.handleOnChange} className="rowData"/>
         </div>)
     }
 }
