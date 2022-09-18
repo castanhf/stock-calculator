@@ -8,14 +8,17 @@ interface Props {
 interface State {
     currStockQuantity: number           //a
     currAvgCostPerStock: number         //b
-    numStocksToBuyOrSell: number        //c
-    currStockPrice: number              //d
-    desiredUserStockPriceAvg: number    //e
+    currStockPrice: number              //c
+    desiredStockQuantity: number        //d
+    desiredAvgCostPerStock: number      //e
 }
 
 /* 
  *The following is the equation using the variables in the State interface
- *          e = (a * b) + (c * d) / (a + d)
+ *          e = [ (a * b) + (c * d) ] / (a + d)
+ *          
+ *This is equivalent to the following:
+ *          d = [ a * (b - e) ] / (e - c)
  */
 
 
@@ -35,9 +38,9 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
         this.state = {
             currStockQuantity: 0,
             currAvgCostPerStock: 0,
-            numStocksToBuyOrSell: 0,
             currStockPrice: 0,
-            desiredUserStockPriceAvg: 0,
+            desiredStockQuantity: 0,
+            desiredAvgCostPerStock: 0,
         }
     }
 
@@ -49,29 +52,36 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
         const {name, value}  = evnt.target
 
         //TODO: search for Object.assign()
-        const {currStockQuantity, currAvgCostPerStock, numStocksToBuyOrSell, currStockPrice, desiredUserStockPriceAvg} = Object.assign({}, this.state, {[name]: value})
+        const {currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock} = Object.assign({}, this.state, {[name]: value})
 
         let state = this.state
         
-        //TODO: back to the white board on this one
-        //don't forget to update if conditions and their respective
-        //bodies. also continue watching the video to implement/fix the
-        //connect issue
-        if (name === 'shareQuantity' || name === 'sharePrice') {
+        //This works differently from purchase/sell calculator since we are dealing
+        //with five different mutable variables.
+        //The idea here is for user to provide
+        //info on the three variables that start with "curr" and on one of the
+        //"desired", so that the last variable will be calculated automatically.
+        if (name === 'currStockQuantity' 
+            || name === 'currAvgCostPerStock'
+            || name === 'currStockPrice'
+            || name === 'desiredStockQuantity') {
             state = {
                 currStockQuantity,
                 currAvgCostPerStock,
-                numStocksToBuyOrSell,
                 currStockPrice,
-                desiredUserStockPriceAvg
+                desiredStockQuantity,
+                desiredAvgCostPerStock: ((currStockQuantity * currAvgCostPerStock) + (currStockPrice * desiredStockQuantity))/(currStockQuantity + desiredStockQuantity)
             }
-        } else if (name === 'subTotal') {
+        } else if (name === 'currStockQuantity' 
+            || name === 'currAvgCostPerStock'
+            || name === 'currStockPrice'
+            || name === 'desiredAvgCostPerStock') {
             state = {
                 currStockQuantity,
                 currAvgCostPerStock,
-                numStocksToBuyOrSell,
                 currStockPrice,
-                desiredUserStockPriceAvg
+                desiredStockQuantity: (currStockQuantity * (currAvgCostPerStock - desiredAvgCostPerStock))/(desiredAvgCostPerStock - currStockPrice),
+                desiredAvgCostPerStock
             }
         }
 
@@ -84,7 +94,7 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
      */
     render() {
         //setup a const to fetch this.state
-        const {currStockQuantity, currAvgCostPerStock, numStocksToBuyOrSell, currStockPrice, desiredUserStockPriceAvg} = this.state
+        const {currStockQuantity, currAvgCostPerStock, desiredStockQuantity, currStockPrice, desiredAvgCostPerStock} = this.state
 
         return (<div className="calculatorContainer">
             <h1>Investment Calculator</h1>
@@ -99,11 +109,11 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
 
     {/**Divide between 'Current' and 'Desired' labels */}
 
-            <label htmlFor="desiredUserStockPriceAvg" className="rowData">Desired Cost Per Stock</label>
-            <input name="desiredUserStockPriceAvg" value={desiredUserStockPriceAvg} onChange={this.handleOnChange} className="rowData"/>
+            <label htmlFor="desiredAvgCostPerStock" className="rowData">Desired Cost Per Stock</label>
+            <input name="desiredAvgCostPerStock" value={desiredAvgCostPerStock} onChange={this.handleOnChange} className="rowData"/>
             
-            <label htmlFor="numStocksToBuyOrSell" className="rowData">Desired Amount of Stock to Purchase/Sell</label>
-            <input name="numStocksToBuyOrSell" value={numStocksToBuyOrSell} onChange={this.handleOnChange} className="rowData"/>
+            <label htmlFor="desiredStockQuantity" className="rowData">Desired Amount of Stock to Purchase/Sell</label>
+            <input name="desiredStockQuantity" value={desiredStockQuantity} onChange={this.handleOnChange} className="rowData"/>
         </div>)
     }
 }

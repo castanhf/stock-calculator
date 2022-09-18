@@ -43,10 +43,13 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
      */
     handleOnChange = (evnt: any) => {
         const {name, value}  = evnt.target
-        //const {shareQuantity, sharePrice, subTotal} = this.state
+        
         //TODO: search for Object.assign()
         const {shareQuantity, sharePrice, subTotal} = Object.assign({}, this.state, {[name]: value})
 
+        //When we update the shareQuantity and sharePrice values
+        //the subTotal will update automatically with the
+        //following multiplication: shareQuantity * sharePrice
         let state = this.state
         if (name === 'shareQuantity' || name === 'sharePrice') {
             state = {
