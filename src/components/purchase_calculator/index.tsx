@@ -1,8 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { connect } from 'react-redux';
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
-import { updateField, updateFieldAction } from '../../actions/index';
-import { Component, StoreState } from "../../types";
+import { updateField } from '../../actions/index';
+import { StoreState } from "../../types";
 
 interface Props {
     id: string
@@ -10,34 +9,12 @@ interface Props {
     updateField?: any
 }
 
-interface State {
-    shareQuantity: number
-    sharePrice: number
-    subTotal: number
-}
-
 
 /* 
  *  Class responsible for holding the Stock Purchase Calculator
  */
-class PurchaseCalculator extends React.PureComponent<Props, State> {
+class PurchaseCalculator extends React.PureComponent<Props> {
     
-    /* 
-     *  Overriding constructor
-     */
-    constructor(props: Props) {
-        //always have to call super or constructor won't work
-        super(props)
-
-        //setting the values
-        this.state = {
-            shareQuantity: 0,
-            sharePrice: 0,
-            subTotal: 0,
-        }
-    }
-
-
     /* 
      *  Handle on change - update this.state based on events
      */
@@ -45,27 +22,29 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
         const {name, value}  = evnt.target
         
         //TODO: search for Object.assign()
-        const {shareQuantity, sharePrice, subTotal} = Object.assign({}, this.state, {[name]: value})
+        const { shareQuantity, sharePrice, subTotal } = Object.assign({}, this.props.component, { [name]: value })
+        const { updateField, id } = this.props
+
 
         //When we update the shareQuantity and sharePrice values
         //the subTotal will update automatically with the
         //following multiplication: shareQuantity * sharePrice
-        let state = this.state
+        let handleFields = { ...this.props.component }
         if (name === 'shareQuantity' || name === 'sharePrice') {
-            state = {
+            handleFields = {
               shareQuantity,
               sharePrice,
               subTotal: shareQuantity * sharePrice,
             }
         } else if (name === 'subTotal') {
-            state = {
+            handleFields = {
                 shareQuantity,
                 sharePrice,
                 subTotal
             }
         }
 
-        this.setState(state)
+        updateField(id, handleFields)
     }
 
 
@@ -74,7 +53,7 @@ class PurchaseCalculator extends React.PureComponent<Props, State> {
      */
     render() {
         //setup a const to fetch this.state
-        const {shareQuantity, sharePrice, subTotal} = this.state
+        const { shareQuantity = 0, sharePrice = 0, subTotal = 0 } = this.props.component
 
         return (<div className="calculatorContainer">
             <h1>Purchase Calculator</h1>
@@ -94,9 +73,9 @@ function mapStateToProps(state: StoreState, props: Props) {
     return {
         //TODO: following line is faulty but should be like because of video
         //soon to be fixed
-      //component: state.components[props.id],
-      component: state.components,
-      id: props.id
+        // component: state.components[props.id],
+        component: state.components.get(props.id),
+        id: props.id
     }
   }
 

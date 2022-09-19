@@ -1,7 +1,7 @@
 export interface StoreState {
-    components: Map<string, Component>
-}
-
-export interface Component {
+    components: any
+  }
+  
+  export interface Component {
     id: string,
-}
+  }

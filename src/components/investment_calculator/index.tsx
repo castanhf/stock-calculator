@@ -15,9 +15,10 @@ interface State {
 
 /* 
  *The following is the equation using the variables in the State interface
+ * in regards to desiredAvgCostPerStock
  *          e = [ (a * b) + (c * d) ] / (a + d)
  *          
- *This is equivalent to the following:
+ *This is equivalent to the following in regards to desiredStockQuantity:
  *          d = [ a * (b - e) ] / (e - c)
  */
 
@@ -94,7 +95,7 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
      */
     render() {
         //setup a const to fetch this.state
-        const {currStockQuantity, currAvgCostPerStock, desiredStockQuantity, currStockPrice, desiredAvgCostPerStock} = this.state
+        const {currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock} = this.state
 
         return (<div className="calculatorContainer">
             <h1>Investment Calculator</h1>
@@ -108,12 +109,12 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
             <input name="currStockPrice" value={currStockPrice} onChange={this.handleOnChange} className="rowData"/>
 
     {/**Divide between 'Current' and 'Desired' labels */}
-
-            <label htmlFor="desiredAvgCostPerStock" className="rowData">Desired Cost Per Stock</label>
-            <input name="desiredAvgCostPerStock" value={desiredAvgCostPerStock} onChange={this.handleOnChange} className="rowData"/>
             
             <label htmlFor="desiredStockQuantity" className="rowData">Desired Amount of Stock to Purchase/Sell</label>
             <input name="desiredStockQuantity" value={desiredStockQuantity} onChange={this.handleOnChange} className="rowData"/>
+
+            <label htmlFor="desiredAvgCostPerStock" className="rowData">Desired Cost Per Stock</label>
+            <input name="desiredAvgCostPerStock" value={desiredAvgCostPerStock} onChange={this.handleOnChange} className="rowData"/>
         </div>)
     }
 }
