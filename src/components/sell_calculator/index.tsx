@@ -37,8 +37,6 @@ class SellCalculator extends React.PureComponent<Props, State> {
      */
     handleOnChange = (evnt: any) => {
         const {name, value}  = evnt.target
-        //const {shareQuantity, sharePrice, subTotal} = this.state
-        //TODO: search for Object.assign()
         const {shareQuantity, sharePrice, subTotal} = Object.assign({}, this.state, {[name]: value})
 
         let state = this.state

@@ -27,8 +27,8 @@ function App() {
           {/* <SummaryCalculator pid={componentNames.purchaseShares} sid={componentNames.sellShares} /> */}
         </div>
         <div className='App-intro'>
-          {/**this is a comment: TODO: this is an in progress thing */}
-          {/* <InvestmentCalculator id={componentNames.purchaseShares} /> */}
+          {/**TODO: this is an in progress thing */}
+          <InvestmentCalculator id={componentNames.purchaseShares} />
         </div>
     </div>
   );

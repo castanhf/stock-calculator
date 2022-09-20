@@ -27,9 +27,8 @@ class PurchaseCalculator extends React.PureComponent<Props> {
         const { updateField, id } = this.props
 
 
-        //When we update the shareQuantity and sharePrice values
-        //the subTotal will update automatically with the
-        //following multiplication: shareQuantity * sharePrice
+        //When we update the shareQuantity and sharePrice values, the subTotal will
+        //update automatically with the following multiplication: shareQuantity * sharePrice
         let handleFields = { ...this.props.component }
         if (name === 'shareQuantity' || name === 'sharePrice') {
             handleFields = {
@@ -56,6 +55,8 @@ class PurchaseCalculator extends React.PureComponent<Props> {
         //this just avoids the app from crashing
         if (!this.props.component) return null
 
+        
+        //TODO: CRASH HAPPENS HERE
         //setup a const to fetch this.state
         const { shareQuantity = 0, sharePrice = 0, subTotal = 0 } = this.props.component
 

@@ -7,8 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { rootReducer } from './reducers/index'
 
-//TODO: it was createStore<StoreState> like in video - I dont get it
-//maybe it is outdated. video was from 2017
+//Store creation
 const store = configureStore({
   reducer: rootReducer
 })
