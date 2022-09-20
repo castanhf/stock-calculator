@@ -4,16 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
-import { createStore } from 'redux';
-//import { field } from './reducers/index';
-import { StoreState } from './types/index';
 import { Provider } from 'react-redux';
 import { rootReducer } from './reducers/index'
 
 //TODO: it was createStore<StoreState> like in video - I dont get it
 //maybe it is outdated. video was from 2017
-const store = createStore(rootReducer, {
-  components: {}
+const store = configureStore({
+  reducer: rootReducer
 })
 
 

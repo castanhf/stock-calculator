@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { updateField } from '../../actions/index';
 import { StoreState } from "../../types";
 
+
 interface Props {
     id: string
     component?: any    
@@ -52,6 +53,9 @@ class PurchaseCalculator extends React.PureComponent<Props> {
      *  Render the values we are showing to user
      */
     render() {
+        //this just avoids the app from crashing
+        if (!this.props.component) return null
+
         //setup a const to fetch this.state
         const { shareQuantity = 0, sharePrice = 0, subTotal = 0 } = this.props.component
 
@@ -71,13 +75,9 @@ class PurchaseCalculator extends React.PureComponent<Props> {
 
 function mapStateToProps(state: StoreState, props: Props) {
     return {
-        //TODO: following line is faulty but should be like because of video
-        //soon to be fixed
-        // component: state.components[props.id],
-        component: state.components.get(props.id),
+        component: state.components[props.id],
         id: props.id
     }
   }
 
-//this.props.updateField()
 export default connect(mapStateToProps, { updateField })(PurchaseCalculator as any)

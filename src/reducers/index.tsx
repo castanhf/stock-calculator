@@ -1,16 +1,20 @@
 import { combineReducers, Reducer } from 'redux';
 
-import { updateFieldAction, componentAction } from '../actions';
+import { componentAction, updateFieldAction } from '../actions';
 import { StoreState } from '../types/index';
 import { UPDATE_FIELD, ADD_COMPONENT } from '../constants/index';
 
-//TODO: I dont get this error either
-export const rootReducer: Reducer<StoreState> = combineReducers({
-  components
+//reducer!
+export const rootReducer = combineReducers({
+  components: components
 })
 
+//NOTE: this following line is wrong because 'Reducer<StoreState>'
+//does not match the function 'components' below
+// export const rootReducer: Reducer<StoreState> = combineReducers({
+
 export function components(state: any, action: componentAction | updateFieldAction): StoreState {
-  console.log('state before: ', state, action);
+  // console.log('state before: ', state, action);
 
   if (!state) state = {}
 

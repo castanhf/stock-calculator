@@ -24,11 +24,11 @@ function App() {
         <div className='App-intro'>
           <PurchaseCalculator id={componentNames.purchaseShares} />
           <SellCalculator id={componentNames.sellShares} />
-          <SummaryCalculator pid={componentNames.purchaseShares} sid={componentNames.sellShares} />
+          {/* <SummaryCalculator pid={componentNames.purchaseShares} sid={componentNames.sellShares} /> */}
         </div>
         <div className='App-intro'>
           {/**this is a comment: TODO: this is an in progress thing */}
-          <InvestmentCalculator id={componentNames.purchaseShares} />
+          {/* <InvestmentCalculator id={componentNames.purchaseShares} /> */}
         </div>
     </div>
   );
