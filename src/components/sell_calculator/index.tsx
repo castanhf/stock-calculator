@@ -81,7 +81,7 @@ class SellCalculator extends React.PureComponent<Props, State> {
 
         //setup a const to fetch this.state
         const { id } = this.props
-        const {shareQuantity, sharePrice, subTotal} = this.props.component
+        const { shareQuantity = 0, sharePrice = 0, subTotal = 0 } = this.props.component
 
         return (<div className="calculatorContainer" key={id}>
             <h1>Sell Calculator</h1>

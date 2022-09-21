@@ -2,12 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Tab from './components/tab/index'
+import * as componentNames from './constants/component_names'
+import { generateGuid } from './helpers/index'
+// Import the calculators
 import PurchaseCalculator from './components/purchase_calculator';
 import SellCalculator from './components/sell_calculator';
 import InvestmentCalculator from './components/investment_calculator';
 import SummaryCalculator from './components/summary_calculator/index';
-import * as componentNames from './constants/component_names'
-import { generateGuid } from './helpers/index'
+
 
 interface Props {
   addComponent?: any
@@ -34,7 +36,7 @@ class App extends React.Component<Props, State> {
     }
   }
 
-  
+
   componentWillMount() {
     this.createTab()
   }
@@ -75,10 +77,12 @@ class App extends React.Component<Props, State> {
       const sellId = componentNames.sellShares + '_' + tab.id
 
       return <Tab id={tab.id} name={tab.name} key={tab.id} selected={selectedTabId === tab.id}>
-      <PurchaseCalculator id={purchaseId} key={purchaseId}/>
-      <SellCalculator id={sellId} key={sellId} />
-      <SummaryCalculator pid={purchaseId} sid={sellId} key={purchaseId + sellId}/>
-    </Tab>
+        <PurchaseCalculator id={purchaseId} key={purchaseId} />
+        <SellCalculator id={sellId} key={sellId} />
+        <SummaryCalculator pid={purchaseId} sid={sellId} key={purchaseId + sellId} />
+        {/* TODO: WIP stuff */}
+        <InvestmentCalculator id={''} />
+      </Tab>
     })
   }
 
@@ -91,7 +95,7 @@ class App extends React.Component<Props, State> {
     const { tabs } = this.state
 
     return tabs.map((tab) => {
-      return <input name={tab.id} value={tab.name} onClick={() => this.selectTab(tab.id)} onChange={this.renameTab}/>
+      return <input name={tab.id} value={tab.name} onClick={() => this.selectTab(tab.id)} onChange={this.renameTab} />
     })
   }
 
@@ -99,18 +103,14 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <div className='App-background'>
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Stock Calculator</h2>
-          <input onClick={this.createTab} placeholder="Create tab"/>
-        </header>
-        <div className='App-intro'>
-          {this.renderTabNavigation()}
-          {this.renderTabs()}
-        </div>
-        <div className='App-intro'>
-          {/**TODO: this is an in progress thing */}
-          {/* <InvestmentCalculator id={componentNames.purchaseShares} /> */}
+          <input onClick={this.createTab} placeholder="Create tab" />
+          <div>
+            {this.renderTabNavigation()}
+            {this.renderTabs()}
+          </div>
         </div>
       </div>
     );

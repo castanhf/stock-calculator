@@ -97,7 +97,7 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
         //setup a const to fetch this.state
         const {currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock} = this.state
 
-        return (<div className="calculatorContainer">
+        return (<div className="calculatorContainer" style={{ width: '834px' }} >
             <h1>Investment Calculator</h1>
             <label htmlFor="currStockQuantity" className="rowData">Current Stock Quantity</label>
             <input name="currStockQuantity" value={currStockQuantity} onChange={this.handleOnChange} className="rowData"/>
