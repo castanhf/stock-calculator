@@ -1,7 +1,14 @@
-import React from "react";
+import * as React from 'react';
+import { StoreState } from '../../types/index';
+import { connect } from 'react-redux';
+import { updateField, addComponent } from '../../actions/index';
 
 interface Props {
     id: string
+    component?: any
+    updateField?: any
+    addComponent?: any
+    key: string
 }
 
 interface State {
@@ -16,6 +23,12 @@ interface State {
  */
 class SellCalculator extends React.PureComponent<Props, State> {
     
+    componentWillMount() {
+        const { addComponent, id } = this.props
+        addComponent(id)
+    }
+
+
     /* 
      *  Overriding constructor
      */
@@ -37,24 +50,25 @@ class SellCalculator extends React.PureComponent<Props, State> {
      */
     handleOnChange = (evnt: any) => {
         const {name, value}  = evnt.target
-        const {shareQuantity, sharePrice, subTotal} = Object.assign({}, this.state, {[name]: value})
+        const { id, updateField, component } = this.props
+        const { shareQuantity, sharePrice, subTotal } = Object.assign({}, component, { [name]: value })
 
-        let state = this.state
+        let handleFields = { ...this.props.component }
         if (name === 'shareQuantity' || name === 'sharePrice') {
-            state = {
+            handleFields = {
               shareQuantity,
               sharePrice,
               subTotal: shareQuantity * sharePrice,
             }
         } else if (name === 'subTotal') {
-            state = {
+            handleFields = {
               shareQuantity: subTotal / sharePrice,
               sharePrice,
               subTotal
             }
         }
 
-        this.setState(state)
+        updateField(id, handleFields)
     }
 
 
@@ -62,10 +76,14 @@ class SellCalculator extends React.PureComponent<Props, State> {
      *  Render the values we are showing to user
      */
     render() {
-        //setup a const to fetch this.state
-        const {shareQuantity, sharePrice, subTotal} = this.state
+        //this just avoids the app from crashing
+        if (!this.props.component) return null
 
-        return (<div className="calculatorContainer">
+        //setup a const to fetch this.state
+        const { id } = this.props
+        const {shareQuantity, sharePrice, subTotal} = this.props.component
+
+        return (<div className="calculatorContainer" key={id}>
             <h1>Sell Calculator</h1>
             <label htmlFor="shareQuantity" className="rowData">Share Quantity</label>
             <input name="shareQuantity" value={shareQuantity} onChange={this.handleOnChange} className="rowData"/>
@@ -79,4 +97,13 @@ class SellCalculator extends React.PureComponent<Props, State> {
     }
 }
 
-export default SellCalculator
+
+function mapStateToProps(state: StoreState, props: Props) {
+    return {
+      component: state.components[props.id],
+      id: props.id
+    }
+}
+
+
+export default connect(mapStateToProps, { updateField, addComponent })(SellCalculator as any);

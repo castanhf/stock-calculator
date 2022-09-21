@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from 'react-redux';
-import { updateField } from '../../actions/index';
+import { updateField, addComponent } from '../../actions/index';
 import { StoreState } from "../../types";
 
 
@@ -8,6 +8,8 @@ interface Props {
     id: string
     component?: any    
     updateField?: any
+    addComponent?: any
+    key: string
 }
 
 
@@ -16,13 +18,22 @@ interface Props {
  */
 class PurchaseCalculator extends React.PureComponent<Props> {
     
+    componentWillMount() {
+        const { addComponent, id } = this.props
+        addComponent(id)
+    }
+    
+    componentWillUnmount() {
+        //removeComponent(id)
+    }
+
+
     /* 
      *  Handle on change - update this.state based on events
      */
     handleOnChange = (evnt: any) => {
-        const {name, value}  = evnt.target
-        
         //TODO: search for Object.assign()
+        const { name, value }  = evnt.target
         const { shareQuantity, sharePrice, subTotal } = Object.assign({}, this.props.component, { [name]: value })
         const { updateField, id } = this.props
 
@@ -55,12 +66,11 @@ class PurchaseCalculator extends React.PureComponent<Props> {
         //this just avoids the app from crashing
         if (!this.props.component) return null
 
-        
-        //TODO: CRASH HAPPENS HERE
         //setup a const to fetch this.state
+        const { id } = this.props
         const { shareQuantity = 0, sharePrice = 0, subTotal = 0 } = this.props.component
 
-        return (<div className="calculatorContainer">
+        return (<div className="calculatorContainer" key={id}>
             <h1>Purchase Calculator</h1>
             <label htmlFor="shareQuantity" className="rowData">Share Quantity</label>
             <input name="shareQuantity" value={shareQuantity} onChange={this.handleOnChange} className="rowData"/>
@@ -81,4 +91,4 @@ function mapStateToProps(state: StoreState, props: Props) {
     }
   }
 
-export default connect(mapStateToProps, { updateField })(PurchaseCalculator as any)
+export default connect(mapStateToProps, { updateField, addComponent })(PurchaseCalculator as any)
