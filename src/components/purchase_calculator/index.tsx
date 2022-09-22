@@ -32,8 +32,9 @@ class PurchaseCalculator extends React.PureComponent<Props> {
      *  Handle on change - update this.state based on events
      */
     handleOnChange = (evnt: any) => {
-        //TODO: search for Object.assign()
         const { name, value }  = evnt.target
+        
+        //TODO: search for Object.assign()
         const { shareQuantity, sharePrice, subTotal } = Object.assign({}, this.props.component, { [name]: value })
         const { updateField, id } = this.props
 

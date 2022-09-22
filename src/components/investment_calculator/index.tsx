@@ -1,5 +1,5 @@
 import React from "react";
-import {connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 interface Props {
     id: string
@@ -27,7 +27,7 @@ interface State {
  *  Class responsible for holding the Stock Purchase Calculator
  */
 class InvestmentCalculator extends React.PureComponent<Props, State> {
-    
+
     /* 
      *  Overriding constructor
      */
@@ -50,19 +50,19 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
      *  Handle on change - update this.state based on events
      */
     handleOnChange = (evnt: any) => {
-        const {name, value}  = evnt.target
+        const { name, value } = evnt.target
 
         //TODO: search for Object.assign()
-        const {currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock} = Object.assign({}, this.state, {[name]: value})
+        const { currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock } = Object.assign({}, this.state, { [name]: value })
 
         let state = this.state
-        
+
         //This works differently from purchase/sell calculator since we are dealing
         //with five different mutable variables.
         //The idea here is for user to provide
         //info on the three variables that start with "curr" and on one of the
         //"desired", so that the last variable will be calculated automatically.
-        if (name === 'currStockQuantity' 
+        if (name === 'currStockQuantity' //autocomplete desiredAvgCostPerStock
             || name === 'currAvgCostPerStock'
             || name === 'currStockPrice'
             || name === 'desiredStockQuantity') {
@@ -71,9 +71,10 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
                 currAvgCostPerStock,
                 currStockPrice,
                 desiredStockQuantity,
-                desiredAvgCostPerStock: ((currStockQuantity * currAvgCostPerStock) + (currStockPrice * desiredStockQuantity))/(currStockQuantity + desiredStockQuantity)
+                // TODO: review math
+                desiredAvgCostPerStock: ((currStockQuantity * currAvgCostPerStock) + (currStockPrice * desiredStockQuantity)) / (currStockQuantity + desiredStockQuantity)
             }
-        } else if (name === 'currStockQuantity' 
+        } else if (name === 'currStockQuantity' //autocomplete desiredStockQuantity
             || name === 'currAvgCostPerStock'
             || name === 'currStockPrice'
             || name === 'desiredAvgCostPerStock') {
@@ -81,7 +82,19 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
                 currStockQuantity,
                 currAvgCostPerStock,
                 currStockPrice,
-                desiredStockQuantity: (currStockQuantity * (currAvgCostPerStock - desiredAvgCostPerStock))/(desiredAvgCostPerStock - currStockPrice),
+                // TODO: review math
+                desiredStockQuantity: (currStockQuantity * (currAvgCostPerStock - desiredAvgCostPerStock)) / (desiredAvgCostPerStock - currStockPrice),
+                desiredAvgCostPerStock
+            }
+        } else if (name === 'currStockQuantity' //autocomplete currstockprice
+            || name === 'currAvgCostPerStock'
+            || name === 'desiredStockQuantity'
+            || name === 'desiredAvgCostPerStock') {
+            state = {
+                currStockQuantity,
+                currAvgCostPerStock,
+                currStockPrice: (desiredAvgCostPerStock * (currStockQuantity + desiredStockQuantity) - (currStockQuantity * currAvgCostPerStock)) / desiredStockQuantity,
+                desiredStockQuantity,
                 desiredAvgCostPerStock
             }
         }
@@ -95,26 +108,26 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
      */
     render() {
         //setup a const to fetch this.state
-        const {currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock} = this.state
+        const { currStockQuantity, currAvgCostPerStock, currStockPrice, desiredStockQuantity, desiredAvgCostPerStock } = this.state
 
         return (<div className="calculatorContainer" style={{ width: '834px' }} >
             <h1>Investment Calculator</h1>
             <label htmlFor="currStockQuantity" className="rowData">Current Stock Quantity</label>
-            <input name="currStockQuantity" value={currStockQuantity} onChange={this.handleOnChange} className="rowData"/>
+            <input name="currStockQuantity" value={currStockQuantity} onChange={this.handleOnChange} className="rowData" />
 
             <label htmlFor="currAvgCostPerStock" className="rowData">Current Cost Per Stock</label>
-            <input name="currAvgCostPerStock" value={currAvgCostPerStock} onChange={this.handleOnChange} className="rowData"/>
+            <input name="currAvgCostPerStock" value={currAvgCostPerStock} onChange={this.handleOnChange} className="rowData" />
 
             <label htmlFor="currStockPrice" className="rowData">Current Stock Price</label>
-            <input name="currStockPrice" value={currStockPrice} onChange={this.handleOnChange} className="rowData"/>
+            <input name="currStockPrice" value={currStockPrice} onChange={this.handleOnChange} className="rowData" />
 
-    {/**Divide between 'Current' and 'Desired' labels */}
-            
+            {/**Divide between 'Current' and 'Desired' labels */}
+
             <label htmlFor="desiredStockQuantity" className="rowData">Desired Amount of Stock to Purchase/Sell</label>
-            <input name="desiredStockQuantity" value={desiredStockQuantity} onChange={this.handleOnChange} className="rowData"/>
+            <input name="desiredStockQuantity" value={desiredStockQuantity} onChange={this.handleOnChange} className="rowData" />
 
             <label htmlFor="desiredAvgCostPerStock" className="rowData">Desired Cost Per Stock</label>
-            <input name="desiredAvgCostPerStock" value={desiredAvgCostPerStock} onChange={this.handleOnChange} className="rowData"/>
+            <input name="desiredAvgCostPerStock" value={desiredAvgCostPerStock} onChange={this.handleOnChange} className="rowData" />
         </div>)
     }
 }
