@@ -75,30 +75,30 @@ class InvestmentCalculator extends React.PureComponent<Props, State> {
                 desiredAvgCostPerStock: ((currStockQuantity * currAvgCostPerStock) + (currStockPrice * desiredStockQuantity)) / (currStockQuantity + desiredStockQuantity)
             }
         } 
-        // else if (name === 'currStockQuantity' //autocomplete desiredStockQuantity
-        //     || name === 'currAvgCostPerStock'
-        //     || name === 'currStockPrice'
-        //     || name === 'desiredAvgCostPerStock') {
-        //     state = {
-        //         currStockQuantity,
-        //         currAvgCostPerStock,
-        //         currStockPrice,
-        //         // TODO: review math
-        //         desiredStockQuantity: (currStockQuantity * (currAvgCostPerStock - desiredAvgCostPerStock)) / (desiredAvgCostPerStock - currStockPrice),
-        //         desiredAvgCostPerStock
-        //     }
-        // } else if (name === 'currStockQuantity' //autocomplete currstockprice
-        //     || name === 'currAvgCostPerStock'
-        //     || name === 'desiredStockQuantity'
-        //     || name === 'desiredAvgCostPerStock') {
-        //     state = {
-        //         currStockQuantity,
-        //         currAvgCostPerStock,
-        //         currStockPrice: (desiredAvgCostPerStock * (currStockQuantity + desiredStockQuantity) - (currStockQuantity * currAvgCostPerStock)) / desiredStockQuantity,
-        //         desiredStockQuantity,
-        //         desiredAvgCostPerStock
-        //     }
-        // }
+        else if (name === 'currStockQuantity' //autocomplete desiredStockQuantity
+            || name === 'currAvgCostPerStock'
+            || name === 'currStockPrice'
+            || name === 'desiredAvgCostPerStock') {
+            state = {
+                currStockQuantity,
+                currAvgCostPerStock,
+                currStockPrice,
+                // TODO: review math
+                desiredStockQuantity: (currStockQuantity * (currAvgCostPerStock - desiredAvgCostPerStock)) / (desiredAvgCostPerStock - currStockPrice),
+                desiredAvgCostPerStock
+            }
+        } else if (name === 'currStockQuantity' //autocomplete currstockprice
+            || name === 'currAvgCostPerStock'
+            || name === 'desiredStockQuantity'
+            || name === 'desiredAvgCostPerStock') {
+            state = {
+                currStockQuantity,
+                currAvgCostPerStock,
+                currStockPrice: (desiredAvgCostPerStock * (currStockQuantity + desiredStockQuantity) - (currStockQuantity * currAvgCostPerStock)) / desiredStockQuantity,
+                desiredStockQuantity,
+                desiredAvgCostPerStock
+            }
+        }
 
         this.setState(state)
     }
